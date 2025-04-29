@@ -5,7 +5,6 @@
 /Server/obj
 /Dal/obj
 /BL/obj
-/Server/Properties
 /.vs/Investments
 /BL/bin/Debug/net7.0
 /Dal/bin/Debug/net7.0
