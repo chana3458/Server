@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Server/obj
+/Dal/obj
+/BL/obj
+/Server/Properties
+/.vs/Investments
+/BL/bin/Debug/net7.0
+/Dal/bin/Debug/net7.0
+/Server/bin/Debug/net7.0
