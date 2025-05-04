@@ -45,7 +45,7 @@ namespace Dal.Services
             newInvestmentProvider.PhoneNumber = item.PhoneNumber;
             newInvestmentProvider.Name = item.Name;
             newInvestmentProvider.Address = item.Address;
-
+            //okjojoij
             dbcontext.SaveChanges();
         }
     }
