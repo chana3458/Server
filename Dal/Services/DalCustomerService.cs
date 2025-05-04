@@ -1,5 +1,6 @@
 ﻿using Dal.Api;
 using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Dal.Services
 
     
            
-            
+            //.Include(x => x.RequestDetails).
         
         public List<Customer> GetAll()=>dbcontext.Customers.ToList();
 

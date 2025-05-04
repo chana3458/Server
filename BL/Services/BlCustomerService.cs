@@ -14,19 +14,23 @@ namespace BL.Services
     public class BlCustomerService : IblCustomer
     {
         IDal dal;
-        public BlCustomerService(IDal dal) {
+        IblRequest request;
+        public BlCustomerService(IDal dal, IblRequest request) {
         
             this.dal = dal;
+            this.request = request;
 
         }
 
         public void create(BlCustomer customer)
         {
             Customer newCustomer =new Customer();
+
             newCustomer.Id = customer.Id;
             newCustomer.Name = customer.Name;
             newCustomer.PhoneNumber = customer.PhoneNumber;
             newCustomer.Address = customer.Address;
+            //newCustomer.RequestDetails = customer.RequestDetails;   
             dal.Customer.create(newCustomer);
             
         }
@@ -44,13 +48,33 @@ namespace BL.Services
             List<BlCustomer> list= new List<BlCustomer>();
 
             cList.ForEach(p => list.Add(new BlCustomer()
-            { Id = p.Id, Name = p.Name, PhoneNumber = p.PhoneNumber, Address = p.Address }));
+            { Id = p.Id, Name = p.Name, PhoneNumber = p.PhoneNumber, Address = p.Address,
+
+                //RequestDetails = (
+                
+                //p.RequestDetails.ToList().ForEach(r => p.RequestDetails.Add(new BlRequest()
+                //{
+                //    Id = r.Id,
+                //    Budget = r.Budget,
+                //    RiskLevel = r.RiskLevel,
+                //    Range = r.Range,
+                //    GotOffer = r.GotOffer,
+                //    Name = p.Name,
+                //    PhoneNumber = p.PhoneNumber
+                    
+                //}))
+                //)
+
+
+            }));
             return list;    
         }
 
         public BlCustomer getCustomerById(string id)
         {
             var cust= dal.Customer.GetCustomerById(id);
+            if (cust == null)
+                throw new NullReferenceException("aaa");
 
         BlCustomer nc = new BlCustomer() { Id = cust.Id, Name = cust.Name, PhoneNumber = cust.PhoneNumber, Address = cust.Address };
             return nc;
