@@ -6,6 +6,7 @@ using Dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,16 +23,43 @@ namespace BL.Services
             this.dal = dal;
 
         }
-        public void create(BlRequest request)
+
+        
+        public BlRequest castToBl(RequestDetail request)
         {
-           
-            RequestDetail newReq= new RequestDetail();
+            BlRequest newReq = new BlRequest();
             newReq.Id = request.Id;
             newReq.RiskLevel = request.RiskLevel;
             newReq.Budget = request.Budget;
-            newReq.GotOffer =false;
-          
+            newReq.GotOffer = request.GotOffer;
+            newReq.PhoneNumber = dal.Customer.GetCustomerById(request.Id).PhoneNumber;
+            newReq.Name = dal.Customer.GetCustomerById(request.Id).Name;
+
+            return newReq;
+
+        }
+        public RequestDetail castToDal(BlRequest request)
+        {
+            RequestDetail newReq = new RequestDetail();
+            newReq.Id = request.Id;
+            newReq.RiskLevel = request.RiskLevel;
+            newReq.Budget = request.Budget;
+            newReq.GotOffer = request.GotOffer;
+            
+
+            return newReq;
+
+        }
+
+
+        public void create(BlRequest request)
+        {
+
+           RequestDetail newReq=castToDal(request);
+
+
             dal.RequestDetails.create(newReq);}
+       
 
         public void deleteById(string id)
         {
@@ -41,29 +69,24 @@ namespace BL.Services
         public List<BlRequest> GetAll()
         {
 
-            //string name = dal.Customer.GetCustomerById(request.Id).Name;
-            //string phoneNumber = dal.Customer.GetCustomerById(request.Id).PhoneNumber;
+           
             var rList = dal.RequestDetails.GetAll();
 
             List<BlRequest> list = new List<BlRequest>();
             
-            rList.ForEach(p => list.Add(new BlRequest()
-            { Id = p.Id,   Budget = p.Budget, RiskLevel = p.RiskLevel, Range =p.Range, GotOffer=p.GotOffer, Name = dal.Customer.GetCustomerById(p.Id).Name ,PhoneNumber = dal.Customer.GetCustomerById(p.Id).PhoneNumber }));
+            rList.ForEach(p => list.Add(castToBl(p)));
             return list;
         }
 
         public void update(BlRequest request)
         {
-            RequestDetail newRequest = new RequestDetail();
-            newRequest.Id = request.Id;
-            newRequest.Budget = request.Budget;
-            newRequest.RiskLevel = request.RiskLevel;
-            newRequest.Range = request.Range;
-            newRequest.GotOffer = request.GotOffer;
+            RequestDetail newRequest = castToDal(request);
             dal.RequestDetails.update(newRequest);
         }
        public void deleteInt(int id){
             dal.RequestDetails.DeleteInt(id);
         }
+
+       
     }
 }

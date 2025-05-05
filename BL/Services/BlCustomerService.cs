@@ -3,6 +3,7 @@ using BL.Models;
 using Dal.Api;
 using Dal.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,17 +22,43 @@ namespace BL.Services
             this.request = request;
 
         }
-
-        public void create(BlCustomer customer)
+        public Customer castToDal(BlCustomer customer)
         {
-            Customer newCustomer =new Customer();
+
+
+            Customer newCustomer = new Customer();
 
             newCustomer.Id = customer.Id;
             newCustomer.Name = customer.Name;
             newCustomer.PhoneNumber = customer.PhoneNumber;
             newCustomer.Address = customer.Address;
-            //newCustomer.RequestDetails = customer.RequestDetails;   
-            dal.Customer.create(newCustomer);
+           
+            return newCustomer; 
+        }
+
+
+        public BlCustomer castToBl(Customer customer)
+        {
+            BlCustomer newCustomer = new BlCustomer();
+
+
+            newCustomer. Id = customer.Id;
+            newCustomer.Name = customer.Name;
+            newCustomer. PhoneNumber = customer.PhoneNumber;
+            newCustomer.Address = customer.Address;
+            //cList.ForEach(p => list.Add(castToBl(p)));
+            customer.RequestDetails.ToList().ForEach(x => newCustomer.RequestDetails.Add(request.castToBl(x)));
+            
+            return newCustomer;
+
+        }
+
+        public void create(BlCustomer customer)
+        {
+            Customer newCustomer = castToDal(customer);
+            if (getCustomerById(newCustomer.Id) != null)
+                throw new Exception("id exsistes");
+           else  dal.Customer.create(newCustomer);
             
         }
 
@@ -47,26 +74,10 @@ namespace BL.Services
 
             List<BlCustomer> list= new List<BlCustomer>();
 
-            cList.ForEach(p => list.Add(new BlCustomer()
-            { Id = p.Id, Name = p.Name, PhoneNumber = p.PhoneNumber, Address = p.Address,
+            cList.ForEach(p => list.Add(castToBl(p)));
+           
 
-                //RequestDetails = (
-                
-                //p.RequestDetails.ToList().ForEach(r => p.RequestDetails.Add(new BlRequest()
-                //{
-                //    Id = r.Id,
-                //    Budget = r.Budget,
-                //    RiskLevel = r.RiskLevel,
-                //    Range = r.Range,
-                //    GotOffer = r.GotOffer,
-                //    Name = p.Name,
-                //    PhoneNumber = p.PhoneNumber
-                    
-                //}))
-                //)
-
-
-            }));
+            
             return list;    
         }
 
@@ -76,18 +87,13 @@ namespace BL.Services
             if (cust == null)
                 throw new NullReferenceException("aaa");
 
-        BlCustomer nc = new BlCustomer() { Id = cust.Id, Name = cust.Name, PhoneNumber = cust.PhoneNumber, Address = cust.Address };
+        BlCustomer nc = castToBl(cust);
             return nc;
         }
 
         public void update(BlCustomer customer)
         {
-
-            Customer newCustomer = new Customer();
-            newCustomer.Id = customer.Id;
-            newCustomer.Name = customer.Name;
-            newCustomer.PhoneNumber = customer.PhoneNumber;
-            newCustomer.Address = customer.Address;
+            Customer newCustomer = castToDal(customer);
             dal.Customer.update(newCustomer);
           
         }

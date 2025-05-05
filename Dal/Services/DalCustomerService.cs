@@ -40,11 +40,11 @@ namespace Dal.Services
            
             //.Include(x => x.RequestDetails).
         
-        public List<Customer> GetAll()=>dbcontext.Customers.ToList();
+        public List<Customer> GetAll()=>dbcontext.Customers.Include(x=> x.RequestDetails).ToList();
 
         public void update(Customer item) {
 
-            Customer newCust = dbcontext.Customers.Find(item.Id);
+            Customer? newCust = GetAll().Find(x=> x.Id==item.Id);
             newCust.Id = item.Id;
             newCust.PhoneNumber = item.PhoneNumber;
             newCust.Name = item.Name;
@@ -53,6 +53,6 @@ namespace Dal.Services
             dbcontext.SaveChanges();
         }
 
-        public Customer GetCustomerById(string id)=> dbcontext.Customers.Find(id);
+        public Customer? GetCustomerById(string id)=> GetAll().Find(x=> x.Id==id);
     }
 }
