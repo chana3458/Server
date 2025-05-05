@@ -28,10 +28,15 @@ namespace Server.Controllers
         }
 
         [HttpPost("AddCustomer")]
-        public void AddCustomer([FromBody] BlCustomer cust)
+        public IActionResult AddCustomer([FromBody] BlCustomer cust)
         {
-
+            try { 
             customer.create(cust);
+                return Ok(cust);
+            }
+
+            catch(Exception ex) { return BadRequest(new { Text=ex.Message}); 
+            }
 
         }
 

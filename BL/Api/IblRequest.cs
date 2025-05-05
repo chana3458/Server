@@ -1,4 +1,5 @@
 ﻿using BL.Models;
+using Dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,10 @@ namespace BL.Api
         void create(BlRequest request);
         void deleteById(String id);
         void update(BlRequest request);
-        
+         RequestDetail castToDal(BlRequest request);
+        BlRequest castToBl(RequestDetail request);
+
+
 
     }
 }

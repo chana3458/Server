@@ -17,6 +17,6 @@ namespace BL.Models
         public string? PhoneNumber { get; set; }
 
         public string? Address { get; set; }
-        //public virtual ICollection<RequestDetail> RequestDetails { get; set; } = new List<RequestDetail>();
+        public  ICollection<BlRequest>? RequestDetails { get; set; } = new List<BlRequest>();
     }
 }
