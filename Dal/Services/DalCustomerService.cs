@@ -22,13 +22,13 @@ namespace Dal.Services
         
         }
 
-        public void create(Customer item)
+        public async Task create(Customer item)
         {
             dbcontext.Customers.Add(item);
             dbcontext.SaveChanges();
         }
 
-        public void Delete(String id)
+        public async Task Delete(String id)
         {
            Customer? cust= dbcontext.Customers.Find(id);
             dbcontext.Customers.Remove(cust);
@@ -40,11 +40,11 @@ namespace Dal.Services
            
             //.Include(x => x.RequestDetails).
         
-        public List<Customer> GetAll()=>dbcontext.Customers.Include(x=> x.RequestDetails).ToList();
+        public async Task<List<Customer>> GetAll()=>dbcontext.Customers.Include(x=> x.RequestDetails).ToList();
 
-        public void update(Customer item) {
+        public async Task update(Customer item) {
 
-            Customer? newCust = GetAll().Find(x=> x.Id==item.Id);
+            Customer? newCust = GetAll().Result.Find(x=> x.Id==item.Id);
             newCust.Id = item.Id;
             newCust.PhoneNumber = item.PhoneNumber;
             newCust.Name = item.Name;
@@ -53,6 +53,8 @@ namespace Dal.Services
             dbcontext.SaveChanges();
         }
 
-        public Customer? GetCustomerById(string id)=> GetAll().Find(x=> x.Id==id);
+        public async Task<Customer>? GetCustomerById(string id)=> GetAll().Result. Find(x=> x.Id==id);
+
+
     }
 }
