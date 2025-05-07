@@ -15,20 +15,20 @@ namespace Server.Controllers
             investment = manager.Investment;
         }
         [HttpGet("GetAllInvstment")]
-        public List<BlInvestment> GetAll()
+        public async Task<List<BlInvestment>> GetAll()
         {
 
-            return investment.GetAll();
+            return investment.GetAll().Result;
         }
         [HttpGet("GetInvestmentByName/{id}")]
-        public BlInvestment getInvestmentByName(String name)
+        public async Task<BlInvestment> getInvestmentByName(String name)
         {
 
-            return investment.getInvestmentByName(name);
+            return investment.getInvestmentByName(name).Result;
         }
 
         [HttpPost("AddInvstment")]
-        public void AddInvstment([FromBody] BlInvestment inv)
+        public async Task AddInvstment([FromBody] BlInvestment inv)
         {
 
             investment.create(inv);
@@ -37,7 +37,7 @@ namespace Server.Controllers
 
 
         [HttpDelete("DeleteInvestment/{id}")]
-        public void DeleteInvestment(String id)
+        public async Task DeleteInvestment(String id)
         {
 
             investment.DeleteById(id);
@@ -45,7 +45,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("UpdateInvstment")]
-        public void UpdateInvstment([FromBody] BlInvestment inv)
+        public async Task UpdateInvstment([FromBody] BlInvestment inv)
         {
 
             investment.update(inv);

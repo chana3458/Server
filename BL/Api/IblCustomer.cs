@@ -9,12 +9,12 @@ namespace BL.Api
 {
     public interface IblCustomer
     {
-        List<BlCustomer> GetAll();
-        void create(BlCustomer customer);
-        void DeleteById(String id);
-        BlCustomer getCustomerById(String id);
+        Task<List<BlCustomer>> GetAll();
+        Task create(BlCustomer customer);
+        Task DeleteById(String id);
+       Task< BlCustomer> getCustomerById(String id);
 
-        void update(BlCustomer customer);
+        Task update(BlCustomer customer);
         
     }
 }

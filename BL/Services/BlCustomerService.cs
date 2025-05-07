@@ -22,7 +22,7 @@ namespace BL.Services
             this.request = request;
 
         }
-        public Customer castToDal(BlCustomer customer)
+        public async Task<Customer> castToDal(BlCustomer customer)
         {
 
 
@@ -37,7 +37,7 @@ namespace BL.Services
         }
 
 
-        public BlCustomer castToBl(Customer customer)
+        public  async Task<BlCustomer> castToBl(Customer customer)
         {
             BlCustomer newCustomer = new BlCustomer();
 
@@ -47,53 +47,52 @@ namespace BL.Services
             newCustomer. PhoneNumber = customer.PhoneNumber;
             newCustomer.Address = customer.Address;
             //cList.ForEach(p => list.Add(castToBl(p)));
-            customer.RequestDetails.ToList().ForEach(x => newCustomer.RequestDetails.Add(request.castToBl(x)));
+            customer.RequestDetails.ToList().ForEach(x => newCustomer.RequestDetails.Add(request.castToBl(x).Result));
             
             return newCustomer;
 
         }
 
-        public void create(BlCustomer customer)
+        public async Task create(BlCustomer customer)
         {
-            Customer newCustomer = castToDal(customer);
+            Customer newCustomer = castToDal(customer).Result;
             if (getCustomerById(newCustomer.Id) != null)
                 throw new Exception("id exsistes");
            else  dal.Customer.create(newCustomer);
             
         }
 
-        public void DeleteById(String id)
+        public async Task DeleteById(String id)
         {
             
             dal.Customer.Delete(id);
         }
        
-        public List<BlCustomer> GetAll()
+        public async  Task<List<BlCustomer>> GetAll()
         {
           var cList= dal.Customer.GetAll();
 
-            List<BlCustomer> list= new List<BlCustomer>();
+           List<BlCustomer> list= new List<BlCustomer>();
 
-            cList.ForEach(p => list.Add(castToBl(p)));
+            cList.Result.ForEach(p => list.Add(castToBl(p).Result   ));
            
-
-            
+                       
             return list;    
         }
 
-        public BlCustomer getCustomerById(string id)
+        public  async Task<BlCustomer> getCustomerById(string id)
         {
-            var cust= dal.Customer.GetCustomerById(id);
+            var cust= dal.Customer.GetCustomerById(id).Result;
             if (cust == null)
-                throw new NullReferenceException("aaa");
+                throw new NullReferenceException("cust not found");
 
-        BlCustomer nc = castToBl(cust);
+        BlCustomer nc = castToBl(cust).Result;
             return nc;
         }
 
-        public void update(BlCustomer customer)
+        public async Task update(BlCustomer customer)
         {
-            Customer newCustomer = castToDal(customer);
+            Customer newCustomer = castToDal(customer).Result;
             dal.Customer.update(newCustomer);
           
         }

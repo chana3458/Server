@@ -9,7 +9,7 @@ namespace Dal
 {
     public class DalManager:IDal
     {
-        dbcontext data=new dbcontext();
+        //dbcontext data=new dbcontext();
         public IDalCustomer Customer { get;  }
         public IdalInvestmentProvider InvestmentProvider{ get; }
 

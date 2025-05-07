@@ -25,20 +25,20 @@ namespace BL.Services
         }
 
         
-        public BlRequest castToBl(RequestDetail request)
+        public async Task<BlRequest> castToBl(RequestDetail request)
         {
             BlRequest newReq = new BlRequest();
             newReq.Id = request.Id;
             newReq.RiskLevel = request.RiskLevel;
             newReq.Budget = request.Budget;
             newReq.GotOffer = request.GotOffer;
-            newReq.PhoneNumber = dal.Customer.GetCustomerById(request.Id).PhoneNumber;
-            newReq.Name = dal.Customer.GetCustomerById(request.Id).Name;
+            newReq.PhoneNumber = dal.Customer.GetCustomerById(request.Id).Result.PhoneNumber;
+            newReq.Name = dal.Customer.GetCustomerById(request.Id).Result.Name;
 
             return newReq;
 
         }
-        public RequestDetail castToDal(BlRequest request)
+        public async Task<RequestDetail> castToDal(BlRequest request)
         {
             RequestDetail newReq = new RequestDetail();
             newReq.Id = request.Id;
@@ -52,21 +52,21 @@ namespace BL.Services
         }
 
 
-        public void create(BlRequest request)
+        public async Task create(BlRequest request)
         {
 
-           RequestDetail newReq=castToDal(request);
+           RequestDetail newReq=castToDal(request).Result;
 
 
             dal.RequestDetails.create(newReq);}
        
 
-        public void deleteById(string id)
+        public async Task deleteById(string id)
         {
             dal.RequestDetails.Delete(id);
         }
 
-        public List<BlRequest> GetAll()
+        public async Task< List<BlRequest>> GetAll()
         {
 
            
@@ -74,16 +74,16 @@ namespace BL.Services
 
             List<BlRequest> list = new List<BlRequest>();
             
-            rList.ForEach(p => list.Add(castToBl(p)));
+            rList.Result.ForEach(p => list.Add(castToBl(p).Result  ));
             return list;
         }
 
-        public void update(BlRequest request)
+        public async Task update(BlRequest request)
         {
-            RequestDetail newRequest = castToDal(request);
+            RequestDetail newRequest = castToDal(request).Result    ;
             dal.RequestDetails.update(newRequest);
         }
-       public void deleteInt(int id){
+       public async Task deleteInt(int id){
             dal.RequestDetails.DeleteInt(id);
         }
 

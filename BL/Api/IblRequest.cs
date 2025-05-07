@@ -11,12 +11,12 @@ namespace BL.Api
 {
     public interface IblRequest
     {
-        List<BlRequest> GetAll();
-        void create(BlRequest request);
-        void deleteById(String id);
-        void update(BlRequest request);
-         RequestDetail castToDal(BlRequest request);
-        BlRequest castToBl(RequestDetail request);
+        Task<List<BlRequest>> GetAll();
+        Task create(BlRequest request);
+        Task deleteById(String id);
+        Task update(BlRequest request);
+        Task<RequestDetail> castToDal(BlRequest request);
+        Task<BlRequest> castToBl(RequestDetail request);
 
 
 

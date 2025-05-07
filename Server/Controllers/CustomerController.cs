@@ -15,16 +15,25 @@ namespace Server.Controllers
             customer = manager.Customer;
         }
         [HttpGet("GetAllCustomers")]
-        public List<BlCustomer> GetAll()
+        public async Task<List<BlCustomer> > GetAll()
         {
-
-            return customer.GetAll();
+            
+            return customer.GetAll().Result ;
         }
         [HttpGet("GetCustomerById/{id}")]
-        public BlCustomer GetCustomerById( String id)
-        {
+        public IActionResult GetCustomerById( String id)
+        { try
+            {
+                 
+                return Ok(customer.getCustomerById(id));
+            }
 
-            return customer.getCustomerById(id);
+            catch (Exception ex)
+            {
+                return BadRequest(new { Text = ex.Message });
+            }
+
+
         }
 
         [HttpPost("AddCustomer")]
