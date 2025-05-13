@@ -35,22 +35,22 @@ namespace BL.Services
 
             newInvestment.Locatoin = investment.Locatoin;
 
-            dal.Investment.create(newInvestment);
+            await   dal.Investment.create(newInvestment);
         }
 
         public async Task DeleteById(string id)
         {
-            dal.Investment.Delete(id);
+         await   dal.Investment.Delete(id);
 
         }
 
         public async Task<List<BlInvestment>> GetAll()
         {
-            var iList = dal.Investment.GetAll();
+            var iList =await dal.Investment.GetAll();
 
             List<BlInvestment> list = new List<BlInvestment>();
 
-            iList.Result.ForEach(i => list.Add(new BlInvestment()
+            iList.ForEach(i => list.Add(new BlInvestment()
             { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel }));
             return list;
         }
@@ -60,7 +60,7 @@ namespace BL.Services
         public async Task<BlInvestment> getInvestmentByName(string name)
         {
 
-            var i = dal.Investment.GetInvestmentByName(name).Result;
+            var i =await dal.Investment.GetInvestmentByName(name);
 
             BlInvestment nc = new BlInvestment() { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel };
             return nc;
@@ -77,7 +77,7 @@ namespace BL.Services
             newInvestment.Ipid = newInvestment.Ipid;
             newInvestment.Range = newInvestment.Range;
             newInvestment.Image = newInvestment.Image;   
-            dal.Investment.update(newInvestment);
+          await  dal.Investment.update(newInvestment);
         }
 
       

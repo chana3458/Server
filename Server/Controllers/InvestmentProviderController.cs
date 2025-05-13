@@ -16,11 +16,12 @@ namespace Server.Controllers
         {
             investmentProvider = manager.InvestmentProvider;
         }
+
         [HttpGet("GetAllInvestmentProviders")]
         public async Task<List<BlInvestmentProvider>> GetAll()
         {
 
-            return investmentProvider.GetAll().Result   ;
+            return await investmentProvider.GetAll()   ;
         }
 
 
@@ -28,7 +29,7 @@ namespace Server.Controllers
         public async Task AddInvestmentProvider([FromBody] BlInvestmentProvider ip)
         {
 
-            investmentProvider.create(ip);
+          await  investmentProvider.create(ip);
 
         }
 
@@ -38,7 +39,7 @@ namespace Server.Controllers
 
         {
 
-            investmentProvider.DeleteById(id);
+          await  investmentProvider.DeleteById(id);
 
         }
 
@@ -46,7 +47,7 @@ namespace Server.Controllers
         public async Task UpdateInvestmentProvider([FromBody] BlInvestmentProvider ip)
         {
 
-            investmentProvider.update(ip);
+          await  investmentProvider.update(ip);
 
         }
     }
