@@ -26,35 +26,36 @@ namespace Dal.Services
         public async Task create(RequestDetail item)
         {
             dbcontext.RequestDetails.Add(item);
-            dbcontext.SaveChanges();
+          await  dbcontext.SaveChangesAsync();
         }
         public async Task DeleteInt(int id)
         {
-            RequestDetail? req = dbcontext.RequestDetails.Find(id);
+            RequestDetail? req =await dbcontext.RequestDetails.FindAsync(id);
             dbcontext.RequestDetails.Remove(req);
-            dbcontext.SaveChanges();
+           await dbcontext.SaveChangesAsync();
         }
         public async Task Delete(string id)
         {
-            RequestDetail? req = dbcontext.RequestDetails.Find(id);
+            RequestDetail? req =await dbcontext.RequestDetails.FindAsync(id);
             dbcontext.RequestDetails.Remove(req);
-            dbcontext.SaveChanges();
+           await dbcontext.SaveChangesAsync();
         }
 
 
         
 
-        public async Task<List<RequestDetail>> GetAll()=> dbcontext.RequestDetails.ToList();
+       public async Task<List<RequestDetail>> GetAll()=>await dbcontext.RequestDetails.ToListAsync();
 
+    
         public async Task update(RequestDetail item)
         {
-            RequestDetail newReq = dbcontext.RequestDetails.Find(item.Id);
+            RequestDetail newReq =await dbcontext.RequestDetails.FindAsync(item.Id);
             //newReq.Id = item.Id;
             newReq.RiskLevel = item.RiskLevel;
             newReq.Range = item.Range;
             newReq.Budget = item.Budget;
             newReq.GotOffer = item.GotOffer;    
-            dbcontext.SaveChanges();
+           await dbcontext.SaveChangesAsync();
         }
 
         

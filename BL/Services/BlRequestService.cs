@@ -32,8 +32,14 @@ namespace BL.Services
             newReq.RiskLevel = request.RiskLevel;
             newReq.Budget = request.Budget;
             newReq.GotOffer = request.GotOffer;
-            newReq.PhoneNumber = dal.Customer.GetCustomerById(request.Id).Result.PhoneNumber;
-            newReq.Name = dal.Customer.GetCustomerById(request.Id).Result.Name;
+            var customer = await dal.Customer.GetCustomerById(request.Id);
+            if (customer != null)
+            {
+                newReq.PhoneNumber = customer.PhoneNumber;
+                newReq.Name = customer.Name;
+            }
+            //newReq.PhoneNumber = (await dal.Customer.GetCustomerById(request.Id)).PhoneNumber;
+            //newReq.Name = (await dal.Customer.GetCustomerById(request.Id)).Name;
 
             return newReq;
 
@@ -55,36 +61,48 @@ namespace BL.Services
         public async Task create(BlRequest request)
         {
 
-           RequestDetail newReq=castToDal(request).Result;
+           RequestDetail newReq=await castToDal(request);
 
 
-            dal.RequestDetails.create(newReq);}
+           await dal.RequestDetails.create(newReq);
+        }
        
 
         public async Task deleteById(string id)
         {
-            dal.RequestDetails.Delete(id);
+           await dal.RequestDetails.Delete(id);
         }
 
-        public async Task< List<BlRequest>> GetAll()
+        public async Task<List<BlRequest>> GetAll()
         {
 
-           
-            var rList = dal.RequestDetails.GetAll();
-
+            var rList = await dal.RequestDetails.GetAll();
             List<BlRequest> list = new List<BlRequest>();
+
+            foreach (var p in rList)
+            {
+                BlRequest blRequest = await castToBl(p);
+                list.Add(blRequest);
+            }
+
             
-            rList.Result.ForEach(p => list.Add(castToBl(p).Result  ));
+
+            //var rList = await dal.RequestDetails.GetAll();
+
+            
             return list;
-        }
+            }
+
+
+         
 
         public async Task update(BlRequest request)
         {
-            RequestDetail newRequest = castToDal(request).Result    ;
-            dal.RequestDetails.update(newRequest);
+            RequestDetail newRequest =await castToDal(request) ;
+           await dal.RequestDetails.update(newRequest);
         }
        public async Task deleteInt(int id){
-            dal.RequestDetails.DeleteInt(id);
+          await  dal.RequestDetails.DeleteInt(id);
         }
 
        

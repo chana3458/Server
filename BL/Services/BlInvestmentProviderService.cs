@@ -28,17 +28,17 @@ namespace BL.Services
             newInvestmentProvider.Name = InvestmentProvider.Name;
             newInvestmentProvider.PhoneNumber = InvestmentProvider.PhoneNumber;
             newInvestmentProvider.Address = InvestmentProvider.Address;
-            dal.InvestmentProvider.create(newInvestmentProvider);
+           await dal.InvestmentProvider.create(newInvestmentProvider);
         }
 
         public async Task DeleteById(string id)
         {
-            dal.InvestmentProvider.Delete(id);
+           await dal.InvestmentProvider.Delete(id);
         }
 
         public async Task<List<BlInvestmentProvider>> GetAll()
         {
-            var cList = dal.InvestmentProvider.GetAll().Result  ;
+            var cList =await dal.InvestmentProvider.GetAll() ;
 
             List<BlInvestmentProvider> list = new List<BlInvestmentProvider>();
 
@@ -56,7 +56,7 @@ namespace BL.Services
             newInvestmentProvider.Name = InvestmentProvider.Name;
             newInvestmentProvider.PhoneNumber = InvestmentProvider.PhoneNumber;
             newInvestmentProvider.Address = InvestmentProvider.Address;
-            dal.InvestmentProvider.update(newInvestmentProvider);
+          await  dal.InvestmentProvider.update(newInvestmentProvider);
         }
 
        
