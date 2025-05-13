@@ -1,5 +1,6 @@
 ﻿using Dal.Api;
 using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,27 +27,27 @@ namespace Dal.Services
         public async Task create(Investment item)
         {
             dbcontext.Investments.Add(item);
-            dbcontext.SaveChanges();
+          await  dbcontext.SaveChangesAsync();
         }
 
         public async Task Delete(string id)
         {
 
-            Investment? i = dbcontext.Investments.Find(id);
+            Investment? i =await dbcontext.Investments.FindAsync(id);
             dbcontext.Investments.Remove(i);
-            dbcontext.SaveChanges();
+          await  dbcontext.SaveChangesAsync();
         }
 
-        public  async Task<List<Investment>> GetAll() => dbcontext.Investments.ToList();
+        public  async Task<List<Investment>> GetAll() =>await dbcontext.Investments.ToListAsync();
 
         
-            public async Task<Investment> GetInvestmentByName(string name) => dbcontext.Investments.Find(name);
+            public async Task<Investment> GetInvestmentByName(string name) =>await dbcontext.Investments.FindAsync(name);
 
        
         public async Task update(Investment item)
         {
 
-            Investment newIn = dbcontext.Investments.Find(item.Id);
+            Investment newIn =await dbcontext.Investments.FindAsync(item.Id);
             newIn.Id = item.Id;
             newIn.RiskLevel = item.RiskLevel;
             newIn.Range = item.Range;
@@ -57,7 +58,7 @@ namespace Dal.Services
             newIn.Locatoin = item.Locatoin;
 
 
-            dbcontext.SaveChanges();
+           await dbcontext.SaveChangesAsync();
         }
 
 

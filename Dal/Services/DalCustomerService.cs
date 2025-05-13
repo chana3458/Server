@@ -25,14 +25,14 @@ namespace Dal.Services
         public async Task create(Customer item)
         {
             dbcontext.Customers.Add(item);
-            dbcontext.SaveChanges();
+           await dbcontext.SaveChangesAsync();
         }
 
         public async Task Delete(String id)
         {
            Customer? cust= dbcontext.Customers.Find(id);
             dbcontext.Customers.Remove(cust);
-            dbcontext.SaveChanges();
+          await  dbcontext.SaveChangesAsync();
         }
 
 
@@ -40,20 +40,20 @@ namespace Dal.Services
            
             //.Include(x => x.RequestDetails).
         
-        public async Task<List<Customer>> GetAll()=>dbcontext.Customers.Include(x=> x.RequestDetails).ToList();
+        public async Task<List<Customer>> GetAll() =>await dbcontext.Customers.Include(x=> x.RequestDetails).ToListAsync();
 
         public async Task update(Customer item) {
-
-            Customer? newCust = GetAll().Result.Find(x=> x.Id==item.Id);
+            Customer? newCust = (await GetAll()).Find(x => x.Id == item.Id);
             newCust.Id = item.Id;
             newCust.PhoneNumber = item.PhoneNumber;
             newCust.Name = item.Name;
             newCust.Address= item.Address;  
          
-            dbcontext.SaveChanges();
+          await dbcontext.SaveChangesAsync();
         }
 
-        public async Task<Customer>? GetCustomerById(string id)=> GetAll().Result. Find(x=> x.Id==id);
+        public async Task<Customer>? GetCustomerById(string id)=>(await GetAll()). Find(x=> x.Id==id);
+        
 
 
     }

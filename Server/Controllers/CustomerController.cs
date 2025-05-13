@@ -18,29 +18,29 @@ namespace Server.Controllers
         public async Task<List<BlCustomer> > GetAll()
         {
             
-            return customer.GetAll().Result ;
+            return await customer.GetAll() ;
         }
         [HttpGet("GetCustomerById/{id}")]
-        public IActionResult GetCustomerById( String id)
+        public async Task<IActionResult>  GetCustomerById( String id)
         { try
             {
                  
-                return Ok(customer.getCustomerById(id));
+                return   Ok( await customer.getCustomerById(id));
             }
 
             catch (Exception ex)
             {
-                return BadRequest(new { Text = ex.Message });
+                return  BadRequest(  new { Text = ex.Message });
             }
 
 
         }
 
         [HttpPost("AddCustomer")]
-        public IActionResult AddCustomer([FromBody] BlCustomer cust)
+        public async Task<IActionResult> AddCustomer([FromBody] BlCustomer cust)
         {
             try { 
-            customer.create(cust);
+              await  customer.create(cust);
                 return Ok(cust);
             }
 
@@ -51,18 +51,18 @@ namespace Server.Controllers
 
 
         [HttpDelete("DeleteCustomer/{id}")]
-        public void DeleteCustomer( String id)
+        public async Task DeleteCustomer( String id)
         {
 
-            customer.DeleteById(id);
+           await customer.DeleteById(id);
 
         }
 
         [HttpPut("UpdateCustomer")]
-        public void UpdateCustomer([FromBody] BlCustomer cust)
+        public async Task UpdateCustomer([FromBody] BlCustomer cust)
         {
 
-            customer.update(cust);
+           await customer.update(cust);
 
         }
     }

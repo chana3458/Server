@@ -20,7 +20,7 @@ namespace Server.Controllers
         public async Task<List<BlRequest>> GetAll()
         {
 
-            return request.GetAll().Result;
+            return await request.GetAll();
         }
 
 
@@ -28,7 +28,7 @@ namespace Server.Controllers
         public async Task AddRequest([FromBody] BlRequest req)
         {
 
-            request.create(req);
+          await  request.create(req);
 
         }
 
@@ -36,7 +36,7 @@ namespace Server.Controllers
         [HttpDelete("DeleteRequest/{id}")]
         public async Task DeleteRequest( int id)
         {
-            ((BlRequestService)request).deleteInt(id);
+           await ((BlRequestService)request).deleteInt(id);
             //request.deleteById(id);
 
         }
@@ -45,7 +45,7 @@ namespace Server.Controllers
         public async Task UpdateRequest([FromBody] BlRequest req)
         {
 
-            request.update(req);
+           await request.update(req);
 
         }
     }

@@ -18,20 +18,20 @@ namespace Server.Controllers
         public async Task<List<BlInvestment>> GetAll()
         {
 
-            return investment.GetAll().Result;
+            return await investment.GetAll();
         }
         [HttpGet("GetInvestmentByName/{id}")]
         public async Task<BlInvestment> getInvestmentByName(String name)
         {
 
-            return investment.getInvestmentByName(name).Result;
+            return await investment.getInvestmentByName(name);
         }
 
         [HttpPost("AddInvstment")]
         public async Task AddInvstment([FromBody] BlInvestment inv)
         {
 
-            investment.create(inv);
+          await  investment.create(inv);
 
         }
 
@@ -40,7 +40,7 @@ namespace Server.Controllers
         public async Task DeleteInvestment(String id)
         {
 
-            investment.DeleteById(id);
+          await  investment.DeleteById(id);
 
         }
 
@@ -48,7 +48,7 @@ namespace Server.Controllers
         public async Task UpdateInvstment([FromBody] BlInvestment inv)
         {
 
-            investment.update(inv);
+           await investment.update(inv);
 
         }
     }
