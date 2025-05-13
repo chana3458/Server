@@ -22,7 +22,7 @@ namespace BL.Services
 
         }
 
-        public void create(BlInvestment investment)
+        public async Task create(BlInvestment investment)
         {
             Investment newInvestment = new Investment();
             newInvestment.Id = investment.Id;
@@ -38,35 +38,35 @@ namespace BL.Services
             dal.Investment.create(newInvestment);
         }
 
-        public void DeleteById(string id)
+        public async Task DeleteById(string id)
         {
             dal.Investment.Delete(id);
 
         }
 
-        public List<BlInvestment> GetAll()
+        public async Task<List<BlInvestment>> GetAll()
         {
             var iList = dal.Investment.GetAll();
 
             List<BlInvestment> list = new List<BlInvestment>();
 
-            iList.ForEach(i => list.Add(new BlInvestment()
+            iList.Result.ForEach(i => list.Add(new BlInvestment()
             { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel }));
             return list;
         }
 
         
 
-        public BlInvestment getInvestmentByName(string name)
+        public async Task<BlInvestment> getInvestmentByName(string name)
         {
 
-            var i = dal.Investment.GetInvestmentByName(name);
+            var i = dal.Investment.GetInvestmentByName(name).Result;
 
             BlInvestment nc = new BlInvestment() { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel };
             return nc;
         }
 
-        public void update(BlInvestment investment)
+        public async Task update(BlInvestment investment)
         {
             Investment newInvestment = new Investment();
             newInvestment.Id = investment.Id;
@@ -79,5 +79,7 @@ namespace BL.Services
             newInvestment.Image = newInvestment.Image;   
             dal.Investment.update(newInvestment);
         }
+
+      
     }
 }

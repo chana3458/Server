@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dal.Api
 {
-    public interface IDalInvestment:ICrud<Investment>
+    public interface IDalInvestment: ICrud<Investment>
     {
-        Investment GetInvestmentByName(String name);
+        Task<Investment> GetInvestmentByName(String name);
     }
 }

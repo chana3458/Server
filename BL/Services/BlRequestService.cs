@@ -6,6 +6,7 @@ using Dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,48 +23,70 @@ namespace BL.Services
             this.dal = dal;
 
         }
-        public void create(BlRequest request)
+
+        
+        public async Task<BlRequest> castToBl(RequestDetail request)
         {
-           
-            RequestDetail newReq= new RequestDetail();
+            BlRequest newReq = new BlRequest();
             newReq.Id = request.Id;
             newReq.RiskLevel = request.RiskLevel;
             newReq.Budget = request.Budget;
-            newReq.GotOffer =false;
-          
-            dal.RequestDetails.create(newReq);}
+            newReq.GotOffer = request.GotOffer;
+            newReq.PhoneNumber = dal.Customer.GetCustomerById(request.Id).Result.PhoneNumber;
+            newReq.Name = dal.Customer.GetCustomerById(request.Id).Result.Name;
 
-        public void deleteById(string id)
+            return newReq;
+
+        }
+        public async Task<RequestDetail> castToDal(BlRequest request)
+        {
+            RequestDetail newReq = new RequestDetail();
+            newReq.Id = request.Id;
+            newReq.RiskLevel = request.RiskLevel;
+            newReq.Budget = request.Budget;
+            newReq.GotOffer = request.GotOffer;
+            
+
+            return newReq;
+
+        }
+
+
+        public async Task create(BlRequest request)
+        {
+
+           RequestDetail newReq=castToDal(request).Result;
+
+
+            dal.RequestDetails.create(newReq);}
+       
+
+        public async Task deleteById(string id)
         {
             dal.RequestDetails.Delete(id);
         }
 
-        public List<BlRequest> GetAll()
+        public async Task< List<BlRequest>> GetAll()
         {
 
-            //string name = dal.Customer.GetCustomerById(request.Id).Name;
-            //string phoneNumber = dal.Customer.GetCustomerById(request.Id).PhoneNumber;
+           
             var rList = dal.RequestDetails.GetAll();
 
             List<BlRequest> list = new List<BlRequest>();
             
-            rList.ForEach(p => list.Add(new BlRequest()
-            { Id = p.Id,   Budget = p.Budget, RiskLevel = p.RiskLevel, Range =p.Range, GotOffer=p.GotOffer, Name = dal.Customer.GetCustomerById(p.Id).Name ,PhoneNumber = dal.Customer.GetCustomerById(p.Id).PhoneNumber }));
+            rList.Result.ForEach(p => list.Add(castToBl(p).Result  ));
             return list;
         }
 
-        public void update(BlRequest request)
+        public async Task update(BlRequest request)
         {
-            RequestDetail newRequest = new RequestDetail();
-            newRequest.Id = request.Id;
-            newRequest.Budget = request.Budget;
-            newRequest.RiskLevel = request.RiskLevel;
-            newRequest.Range = request.Range;
-            newRequest.GotOffer = request.GotOffer;
+            RequestDetail newRequest = castToDal(request).Result    ;
             dal.RequestDetails.update(newRequest);
         }
-       public void deleteInt(int id){
+       public async Task deleteInt(int id){
             dal.RequestDetails.DeleteInt(id);
         }
+
+       
     }
 }

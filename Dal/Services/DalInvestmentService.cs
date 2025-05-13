@@ -23,13 +23,13 @@ namespace Dal.Services
 
         }
 
-        public void create(Investment item)
+        public async Task create(Investment item)
         {
             dbcontext.Investments.Add(item);
             dbcontext.SaveChanges();
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
 
             Investment? i = dbcontext.Investments.Find(id);
@@ -37,13 +37,13 @@ namespace Dal.Services
             dbcontext.SaveChanges();
         }
 
-        public List<Investment> GetAll() => dbcontext.Investments.ToList();
+        public  async Task<List<Investment>> GetAll() => dbcontext.Investments.ToList();
 
         
-            public Investment GetInvestmentByName(string name) => dbcontext.Investments.Find(name);
+            public async Task<Investment> GetInvestmentByName(string name) => dbcontext.Investments.Find(name);
 
        
-        public void update(Investment item)
+        public async Task update(Investment item)
         {
 
             Investment newIn = dbcontext.Investments.Find(item.Id);

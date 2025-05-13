@@ -9,7 +9,7 @@ namespace Dal.Api
 {
     public interface IDalRequest:ICrud<RequestDetail>
     {
-        void DeleteInt(int item);
+        Task DeleteInt(int item);
 
     }
 }

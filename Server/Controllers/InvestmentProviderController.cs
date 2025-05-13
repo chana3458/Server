@@ -17,15 +17,15 @@ namespace Server.Controllers
             investmentProvider = manager.InvestmentProvider;
         }
         [HttpGet("GetAllInvestmentProviders")]
-        public List<BlInvestmentProvider> GetAll()
+        public async Task<List<BlInvestmentProvider>> GetAll()
         {
 
-            return investmentProvider.GetAll();
+            return investmentProvider.GetAll().Result   ;
         }
 
 
         [HttpPost("AddInvestmentProvider")]
-        public void AddInvestmentProvider([FromBody] BlInvestmentProvider ip)
+        public async Task AddInvestmentProvider([FromBody] BlInvestmentProvider ip)
         {
 
             investmentProvider.create(ip);
@@ -34,7 +34,7 @@ namespace Server.Controllers
 
 
         [HttpDelete("DeleteInvestmentProvider/{id}")]
-        public void DeleteInvestmentProvider( String id)
+        public async Task DeleteInvestmentProvider( String id)
 
         {
 
@@ -43,7 +43,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("UpdateInvestmentProvider")]
-        public void UpdateInvestmentProvider([FromBody] BlInvestmentProvider ip)
+        public async Task UpdateInvestmentProvider([FromBody] BlInvestmentProvider ip)
         {
 
             investmentProvider.update(ip);
