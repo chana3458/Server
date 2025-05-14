@@ -21,7 +21,7 @@ namespace BL.Services
             this.dal = dal;
 
         }
-
+     
         public async Task create(BlInvestment investment)
         {
             Investment newInvestment = new Investment();
