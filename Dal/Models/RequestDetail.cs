@@ -17,5 +17,5 @@ public partial class RequestDetail
 
     public int RequestId { get; set; }
 
-       public virtual Customer IdNavigation { get; set; } = null!;
+    public virtual Customer IdNavigation { get; set; } = null!;
 }

@@ -1,4 +1,5 @@
-﻿using BL.Api;
+﻿using Azure.Core;
+using BL.Api;
 using BL.Models;
 using Dal.Api;
 using Dal.Models;
@@ -21,20 +22,69 @@ namespace BL.Services
             this.dal = dal;
 
         }
+investments
+
+         public async  Task<Investment> castToDal(BlInvestment investment)
+
      
         public async Task create(BlInvestment investment)
+ main
         {
             Investment newInvestment = new Investment();
+
             newInvestment.Id = investment.Id;
-            newInvestment.Ipid = investment.Ipid;
-            newInvestment.RiskLevel = investment.RiskLevel;
-            newInvestment.Range = investment.Range;
             newInvestment.Description = investment.Description;
-            newInvestment.Image = investment.Image;
+            newInvestment.Images = investment.Images;
+            newInvestment.MinInvestment = investment.MinInvestment;
+            newInvestment.RiskLevel = investment.RiskLevel;
+             newInvestment.Title= investment.Title;  
+             newInvestment.Roi = investment.Roi;
             newInvestment.Price = investment.Price;
+            newInvestment.Ipid = investment.Ipid;
+            newInvestment.Location = investment.Location;
+            newInvestment.Description = investment.Description;
+            newInvestment.Features = investment.Features;
+            newInvestment.Term = investment.Term;
+            newInvestment.Type = investment.Type;
+            newInvestment.Ipid = investment.Ipid;
+            newInvestment.InvestmentProgress = investment.InvestmentProgress; 
+            newInvestment.InvestorCount = investment.InvestorCount;
+            newInvestment.ExpectedCompletion = investment.ExpectedCompletion;
 
-            newInvestment.Locatoin = investment.Locatoin;
+            return newInvestment; 
+        }
 
+        public async Task<BlInvestment> castToBl(Investment investment)
+        {
+            BlInvestment newInvestment = new BlInvestment();
+
+            newInvestment.Id = investment.Id;
+            newInvestment.Description = investment.Description;
+            newInvestment.Images = investment.Images;
+            newInvestment.MinInvestment = investment.MinInvestment;
+            newInvestment.RiskLevel = investment.RiskLevel;
+            newInvestment.Title = investment.Title;
+            newInvestment.Roi = investment.Roi;
+            newInvestment.Price = investment.Price;
+            newInvestment.Ipid = investment.Ipid;
+            newInvestment.Location = investment.Location;
+            newInvestment.Description = investment.Description;
+            newInvestment.Features = investment.Features;
+            newInvestment.Term = investment.Term;
+            newInvestment.Type = investment.Type;
+            newInvestment.Ipid = investment.Ipid;
+            newInvestment.InvestmentProgress = investment.InvestmentProgress;
+            newInvestment.InvestorCount = investment.InvestorCount;
+            newInvestment.ExpectedCompletion = investment.ExpectedCompletion;
+
+            return newInvestment;
+        }
+
+
+        public async Task create(BlInvestment investment)
+        {
+            Investment newInvestment =await castToDal(investment);
+            
             await   dal.Investment.create(newInvestment);
         }
 
@@ -50,8 +100,11 @@ namespace BL.Services
 
             List<BlInvestment> list = new List<BlInvestment>();
 
-            iList.ForEach(i => list.Add(new BlInvestment()
-            { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel }));
+
+            foreach (var i in iList)
+            {
+                list.Add(await castToBl(i));
+            }           
             return list;
         }
 
@@ -62,22 +115,13 @@ namespace BL.Services
 
             var i =await dal.Investment.GetInvestmentByName(name);
 
-            BlInvestment nc = new BlInvestment() { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel };
+            BlInvestment nc =await castToBl(i);
             return nc;
         }
 
         public async Task update(BlInvestment investment)
-        {
-            Investment newInvestment = new Investment();
-            newInvestment.Id = investment.Id;
-            newInvestment.RiskLevel = investment.RiskLevel;
-            newInvestment.Price = investment.Price;
-            newInvestment.Description = investment.Description;
-            newInvestment.Locatoin = investment.Locatoin;
-            newInvestment.Ipid = newInvestment.Ipid;
-            newInvestment.Range = newInvestment.Range;
-            newInvestment.Image = newInvestment.Image;   
-          await  dal.Investment.update(newInvestment);
+        {  
+          await  dal.Investment.update( await castToDal(investment));
         }
 
       
