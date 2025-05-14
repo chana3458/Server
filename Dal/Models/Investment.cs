@@ -5,7 +5,7 @@ namespace Dal.Models;
 
 public partial class Investment
 {
-    public string Id { get; set; } = null!;
+    public int Id { get; set; }
 
     public string? Title { get; set; }
 

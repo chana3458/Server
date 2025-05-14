@@ -1,4 +1,5 @@
 ﻿using BL.Models;
+using Dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace BL.Api
         Task<BlInvestment> getInvestmentByName(String name);
 
         Task update(BlInvestment investment);
+        Task<Investment> castToDal(BlInvestment investment);
+        Task<BlInvestment> castToBl(Investment investment);
     }
 }

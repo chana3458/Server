@@ -45,9 +45,11 @@ namespace BL.Services
 
             foreach (var x in Ip.Investments.ToList())
             {
-                Ip.Investments.Add(await investments.castToBl(x));
+
+                newIp.Investments.Add(await investments.castToBl(x));
             }
 
+           
             return newIp;
 
         }
@@ -69,7 +71,7 @@ namespace BL.Services
 
         public async Task<BlInvestmentProvider> getInvestmentProviderById(string id)
         {
-            var Ip = await dal.Investment.GetInvestmentProviderById(id);
+            var Ip = await dal.InvestmentProvider.GetInvestmentProviderById(id);
             if (Ip == null)
                 return null;
             //throw new NullReferenceException("cust not found");
@@ -77,8 +79,11 @@ namespace BL.Services
             BlInvestmentProvider newIp = await castToBl(Ip);
             return newIp;
         }
+        
 
-    
+
+
+
 
         public async Task DeleteById(string id)
         {

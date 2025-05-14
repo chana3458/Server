@@ -31,7 +31,7 @@ namespace Server.Controllers
             try
             {
 
-                return Ok(await investmentProvider.GetInvestmentProviderById(id));
+                return Ok(await investmentProvider.getInvestmentProviderById(id));
             }
 
             catch (Exception ex)
@@ -41,6 +41,7 @@ namespace Server.Controllers
 
 
         }
+
 
 
         [HttpPost("AddInvestmentProvider")]

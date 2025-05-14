@@ -17,6 +17,5 @@ namespace BL.Models
         public string? PhoneNumber { get; set; }
 
         public string? Address { get; set; }
-        public virtual ICollection<Investment> Investments { get; set; } = new List<Investment>();
     }
 }
