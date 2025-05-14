@@ -1,5 +1,7 @@
-﻿using BL.Api;
+﻿using Azure.Core;
+using BL.Api;
 using BL.Models;
+using BL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +59,9 @@ namespace Server.Controllers
            await customer.DeleteById(id);
 
         }
+
+
+       
 
         [HttpPut("UpdateCustomer")]
         public async Task UpdateCustomer([FromBody] BlCustomer cust)

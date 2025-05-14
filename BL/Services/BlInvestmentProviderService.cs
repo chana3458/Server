@@ -54,15 +54,15 @@ namespace BL.Services
 
         }
 
+        
+
+
 
 
         public async Task create(BlInvestmentProvider InvestmentProvider)
         {
-            InvestmentProvider newInvestmentProvider = new InvestmentProvider();
-            newInvestmentProvider.Id = InvestmentProvider.Id;
-            newInvestmentProvider.Name = InvestmentProvider.Name;
-            newInvestmentProvider.PhoneNumber = InvestmentProvider.PhoneNumber;
-            newInvestmentProvider.Address = InvestmentProvider.Address;
+            InvestmentProvider newInvestmentProvider = await castToDal(InvestmentProvider);
+           
             if (await getInvestmentProviderById(newInvestmentProvider.Id) != null)
                 throw new Exception("id exsistes already");
             else await dal.InvestmentProvider.create(newInvestmentProvider);

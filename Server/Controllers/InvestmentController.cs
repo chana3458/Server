@@ -1,5 +1,6 @@
 ﻿using BL.Api;
 using BL.Models;
+using Dal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +21,11 @@ namespace Server.Controllers
 
             return await investment.GetAll();
         }
-        [HttpGet("GetInvestmentByName/{id}")]
-        public async Task<BlInvestment> getInvestmentByName(String name)
+        [HttpGet("GetInvestmentById/{id}")]
+        public async Task<BlInvestment> getInvestmentById(int id)
         {
 
-            return await investment.getInvestmentByName(name);
+            return await investment.getInvestmentById(id);
         }
 
         [HttpPost("AddInvstment")]
@@ -37,12 +38,14 @@ namespace Server.Controllers
 
 
         [HttpDelete("DeleteInvestment/{id}")]
-        public async Task DeleteInvestment(String id)
+        public async Task DeleteInvestment(int id)
         {
 
           await  investment.DeleteById(id);
 
         }
+
+        
 
         [HttpPut("UpdateInvstment")]
         public async Task UpdateInvstment([FromBody] BlInvestment inv)
