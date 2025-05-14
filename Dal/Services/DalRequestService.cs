@@ -23,6 +23,9 @@ namespace Dal.Services
             dbcontext = data;
 
         }
+
+
+       
         public async Task create(RequestDetail item)
         {
             dbcontext.RequestDetails.Add(item);
@@ -30,10 +33,13 @@ namespace Dal.Services
         }
         public async Task DeleteInt(int id)
         {
-            RequestDetail? req =await dbcontext.RequestDetails.FindAsync(id);
+            RequestDetail? req = dbcontext.RequestDetails.Find(id);
             dbcontext.RequestDetails.Remove(req);
            await dbcontext.SaveChangesAsync();
         }
+
+
+       
         public async Task Delete(string id)
         {
             RequestDetail? req =await dbcontext.RequestDetails.FindAsync(id);

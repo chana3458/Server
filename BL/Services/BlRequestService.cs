@@ -57,22 +57,23 @@ namespace BL.Services
 
         }
 
+       
 
         public async Task create(BlRequest request)
-        {
-
+        { 
            RequestDetail newReq=await castToDal(request);
-
-
-           await dal.RequestDetails.create(newReq);
+           
+                await dal.RequestDetails.create(newReq);
         }
        
 
-        public async Task deleteById(string id)
+        public async Task deleteById(int id)
         {
-           await dal.RequestDetails.Delete(id);
+           await dal.RequestDetails.DeleteInt(id);
         }
 
+
+        
         public async Task<List<BlRequest>> GetAll()
         {
 
@@ -103,6 +104,9 @@ namespace BL.Services
           await  dal.RequestDetails.DeleteInt(id);
         }
 
-       
+        public Task deleteById(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -85,11 +85,12 @@ namespace BL.Services
             await   dal.Investment.create(newInvestment);
         }
 
-        public async Task DeleteById(string id)
+        public async Task DeleteById(int id)
         {
-         await   dal.Investment.Delete(id);
+         await   dal.Investment.DeleteInvestmentById(id);
 
         }
+      
 
         public async Task<List<BlInvestment>> GetAll()
         {
@@ -107,10 +108,10 @@ namespace BL.Services
 
         
 
-        public async Task<BlInvestment> getInvestmentByName(string name)
+        public async Task<BlInvestment> getInvestmentById(int  id)
         {
 
-            var i =await dal.Investment.GetInvestmentByName(name);
+            var i =await dal.Investment.GetInvestmentById(id);
 
             BlInvestment nc =await castToBl(i);
             return nc;

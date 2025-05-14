@@ -9,6 +9,8 @@ namespace Dal.Api
 {
     public interface IDalInvestment: ICrud<Investment>
     {
-        Task<Investment> GetInvestmentByName(String name);
+        Task<Investment> GetInvestmentById(int id);
+        Task DeleteInvestmentById(int id);
+
     }
 }

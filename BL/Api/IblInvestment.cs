@@ -13,8 +13,8 @@ namespace BL.Api
 
         Task<List<BlInvestment>> GetAll();
         Task create(BlInvestment investment);
-        Task DeleteById(String id);
-        Task<BlInvestment> getInvestmentByName(String name);
+        Task DeleteById(int id);
+        Task<BlInvestment> getInvestmentById(int id);
 
         Task update(BlInvestment investment);
         Task<Investment> castToDal(BlInvestment investment);

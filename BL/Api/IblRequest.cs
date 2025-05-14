@@ -14,6 +14,7 @@ namespace BL.Api
         Task<List<BlRequest>> GetAll();
         Task create(BlRequest request);
         Task deleteById(String id);
+        Task deleteInt(int id);
         Task update(BlRequest request);
         Task<RequestDetail> castToDal(BlRequest request);
         Task<BlRequest> castToBl(RequestDetail request);

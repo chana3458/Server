@@ -1,6 +1,7 @@
 ﻿using BL.Api;
 using BL.Models;
 using BL.Services;
+using Dal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,12 +32,13 @@ namespace Server.Controllers
           await  request.create(req);
 
         }
+        
 
 
         [HttpDelete("DeleteRequest/{id}")]
         public async Task DeleteRequest( int id)
         {
-           await ((BlRequestService)request).deleteInt(id);
+           await request.deleteInt(id);
             //request.deleteById(id);
 
         }

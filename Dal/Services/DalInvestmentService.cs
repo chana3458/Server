@@ -30,20 +30,26 @@ namespace Dal.Services
           await  dbcontext.SaveChangesAsync();
         }
 
-        public async Task Delete(string id)
+        public Task Delete(string item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteInvestmentById(int id)
         {
 
-            Investment? i =await dbcontext.Investments.FindAsync(id);
+            Investment? i = dbcontext.Investments.Find(id);
             dbcontext.Investments.Remove(i);
           await  dbcontext.SaveChangesAsync();
         }
 
+        
+
         public  async Task<List<Investment>> GetAll() =>await dbcontext.Investments.ToListAsync();
 
         
-            public async Task<Investment> GetInvestmentByName(string name) =>await dbcontext.Investments.FindAsync(name);
+            public async Task<Investment> GetInvestmentById(int id) =>await dbcontext.Investments.FindAsync(id);
 
-       
         public async Task update(Investment investment)
         {
 
