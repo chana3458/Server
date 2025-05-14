@@ -9,12 +9,12 @@ namespace Dal.Api
     public interface ICrud<T>
     {
      
-        List<T> GetAll();
-        void create(T item); 
+       Task< List<T>> GetAll();
+        Task create(T item);
 
-        void Delete(string item);
+        Task Delete(string item);
 
-        void update(T item);
+        Task update(T item);
         
     }
 }

@@ -9,5 +9,6 @@ namespace Dal.Api
 {
     public interface IdalInvestmentProvider:ICrud<InvestmentProvider>
     {
+        Task<InvestmentProvider> GetInvestmentProviderById(String id);
     }
 }

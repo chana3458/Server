@@ -1,5 +1,6 @@
 ﻿using Dal.Api;
 using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,31 +23,35 @@ namespace Dal.Services
             dbcontext = data;
 
         }
-        public void create(InvestmentProvider item)
+        public async Task create(InvestmentProvider item)
         {
             dbcontext.InvestmentProviders.Add(item);
-            dbcontext.SaveChanges();
+           await dbcontext.SaveChangesAsync();
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
-            InvestmentProvider? cust = dbcontext.InvestmentProviders.Find(id);
+            InvestmentProvider? cust =await dbcontext.InvestmentProviders.FindAsync(id);
             dbcontext.InvestmentProviders.Remove(cust);
-            dbcontext.SaveChanges();
+          await  dbcontext.SaveChangesAsync();
         }
 
-        public List<InvestmentProvider> GetAll()=> dbcontext.InvestmentProviders .ToList();
+        public async Task<List<InvestmentProvider>> GetAll()=>await dbcontext.InvestmentProviders .ToListAsync();
 
 
-        public void update(InvestmentProvider item)
+        public async Task update(InvestmentProvider item)
         {
-            InvestmentProvider newInvestmentProvider = dbcontext.InvestmentProviders.Find(item.Id);
+            InvestmentProvider newInvestmentProvider = await   dbcontext.InvestmentProviders.FindAsync(item.Id);
             newInvestmentProvider.Id = item.Id;
             newInvestmentProvider.PhoneNumber = item.PhoneNumber;
             newInvestmentProvider.Name = item.Name;
             newInvestmentProvider.Address = item.Address;
-            //okjojoij
-            dbcontext.SaveChanges();
+
+          await  dbcontext.SaveChangesAsync();
         }
+       public async Task<InvestmentProvider> GetInvestmentProviderById(string id) =>
+             this.GetAll().Result.Find(x => x.Id == id);
+
+        
     }
 }

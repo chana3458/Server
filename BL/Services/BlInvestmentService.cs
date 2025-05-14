@@ -21,8 +21,8 @@ namespace BL.Services
             this.dal = dal;
 
         }
-
-        public void create(BlInvestment investment)
+     
+        public async Task create(BlInvestment investment)
         {
             Investment newInvestment = new Investment();
             newInvestment.Id = investment.Id;
@@ -35,18 +35,18 @@ namespace BL.Services
 
             newInvestment.Locatoin = investment.Locatoin;
 
-            dal.Investment.create(newInvestment);
+            await   dal.Investment.create(newInvestment);
         }
 
-        public void DeleteById(string id)
+        public async Task DeleteById(string id)
         {
-            dal.Investment.Delete(id);
+         await   dal.Investment.Delete(id);
 
         }
 
-        public List<BlInvestment> GetAll()
+        public async Task<List<BlInvestment>> GetAll()
         {
-            var iList = dal.Investment.GetAll();
+            var iList =await dal.Investment.GetAll();
 
             List<BlInvestment> list = new List<BlInvestment>();
 
@@ -57,16 +57,16 @@ namespace BL.Services
 
         
 
-        public BlInvestment getInvestmentByName(string name)
+        public async Task<BlInvestment> getInvestmentByName(string name)
         {
 
-            var i = dal.Investment.GetInvestmentByName(name);
+            var i =await dal.Investment.GetInvestmentByName(name);
 
             BlInvestment nc = new BlInvestment() { Id = i.Id, Ipid = i.Ipid, Image = i.Image, Description = i.Description, Locatoin = i.Locatoin, Price = i.Price, Range = i.Range, RiskLevel = i.RiskLevel };
             return nc;
         }
 
-        public void update(BlInvestment investment)
+        public async Task update(BlInvestment investment)
         {
             Investment newInvestment = new Investment();
             newInvestment.Id = investment.Id;
@@ -77,7 +77,9 @@ namespace BL.Services
             newInvestment.Ipid = newInvestment.Ipid;
             newInvestment.Range = newInvestment.Range;
             newInvestment.Image = newInvestment.Image;   
-            dal.Investment.update(newInvestment);
+          await  dal.Investment.update(newInvestment);
         }
+
+      
     }
 }

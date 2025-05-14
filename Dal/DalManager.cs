@@ -9,7 +9,7 @@ namespace Dal
 {
     public class DalManager:IDal
     {
-        dbcontext data=new dbcontext();
+        //dbcontext data=new dbcontext();
         public IDalCustomer Customer { get;  }
         public IdalInvestmentProvider InvestmentProvider{ get; }
 
@@ -29,7 +29,7 @@ namespace Dal
             services.AddSingleton<IDalInvestment, DalInvestmentService>();
             services.AddSingleton<IDalRequest, DalRequestService>();
 
-            services.AddSingleton<dbcontext, dbcontext>();
+            services.AddSingleton<dbcontext>();
             ServiceProvider servicesProvider = services.BuildServiceProvider();
 
 

@@ -9,7 +9,7 @@ namespace Dal.Api
 {
     public interface IDalCustomer:ICrud<Customer>
     {
-         Customer GetCustomerById(String id);
+        Task<Customer> GetCustomerById(String id);
 
     }
 }

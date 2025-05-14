@@ -17,35 +17,35 @@ namespace Server.Controllers
             request = manager.Request;
         }
         [HttpGet("GetAllRequests")]
-        public List<BlRequest> GetAll()
+        public async Task<List<BlRequest>> GetAll()
         {
 
-            return request.GetAll();
+            return await request.GetAll();
         }
 
 
         [HttpPost("AddRequest")]
-        public void AddRequest([FromBody] BlRequest req)
+        public async Task AddRequest([FromBody] BlRequest req)
         {
 
-            request.create(req);
+          await  request.create(req);
 
         }
 
 
         [HttpDelete("DeleteRequest/{id}")]
-        public void DeleteRequest( int id)
+        public async Task DeleteRequest( int id)
         {
-            ((BlRequestService)request).deleteInt(id);
+           await ((BlRequestService)request).deleteInt(id);
             //request.deleteById(id);
 
         }
 
         [HttpPut("UpdateRequest")]
-        public void UpdateRequest([FromBody] BlRequest req)
+        public async Task UpdateRequest([FromBody] BlRequest req)
         {
 
-            request.update(req);
+           await request.update(req);
 
         }
     }

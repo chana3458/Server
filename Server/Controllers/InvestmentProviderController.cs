@@ -1,5 +1,6 @@
 ﻿using BL.Api;
 using BL.Models;
+using Dal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,37 +17,55 @@ namespace Server.Controllers
         {
             investmentProvider = manager.InvestmentProvider;
         }
+
         [HttpGet("GetAllInvestmentProviders")]
-        public List<BlInvestmentProvider> GetAll()
+        public async Task<List<BlInvestmentProvider>> GetAll()
         {
 
-            return investmentProvider.GetAll();
+            return await investmentProvider.GetAll()   ;
+        }
+
+        [HttpGet("GetInvestmentProviderById/{id}")]
+        public async Task<IActionResult> GetInvestmentProviderById(String id)
+        {
+            try
+            {
+
+                return Ok(await investmentProvider.GetInvestmentProviderById(id));
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(new { Text = ex.Message });
+            }
+
+
         }
 
 
         [HttpPost("AddInvestmentProvider")]
-        public void AddInvestmentProvider([FromBody] BlInvestmentProvider ip)
+        public async Task AddInvestmentProvider([FromBody] BlInvestmentProvider ip)
         {
 
-            investmentProvider.create(ip);
+          await  investmentProvider.create(ip);
 
         }
 
 
         [HttpDelete("DeleteInvestmentProvider/{id}")]
-        public void DeleteInvestmentProvider( String id)
+        public async Task DeleteInvestmentProvider( String id)
 
         {
 
-            investmentProvider.DeleteById(id);
+          await  investmentProvider.DeleteById(id);
 
         }
 
         [HttpPut("UpdateInvestmentProvider")]
-        public void UpdateInvestmentProvider([FromBody] BlInvestmentProvider ip)
+        public async Task UpdateInvestmentProvider([FromBody] BlInvestmentProvider ip)
         {
 
-            investmentProvider.update(ip);
+          await  investmentProvider.update(ip);
 
         }
     }

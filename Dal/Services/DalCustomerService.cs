@@ -1,5 +1,6 @@
 ﻿using Dal.Api;
 using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,37 +22,46 @@ namespace Dal.Services
         
         }
 
-        public void create(Customer item)
+        public async Task create(Customer item)
         {
-            dbcontext.Customers.Add(item);
-            dbcontext.SaveChanges();
+           dbcontext.Customers.Add(item);
+           await dbcontext.SaveChangesAsync();
         }
 
-        public void Delete(String id)
+        public async Task Delete(String id)
         {
            Customer? cust= dbcontext.Customers.Find(id);
             dbcontext.Customers.Remove(cust);
-            dbcontext.SaveChanges();
+          await  dbcontext.SaveChangesAsync();
         }
 
 
     
            
-            
+            //.Include(x => x.RequestDetails).
         
-        public List<Customer> GetAll()=>dbcontext.Customers.ToList();
+        public async Task<List<Customer>> GetAll()
+            => dbcontext.Customers.Include(x=> x.RequestDetails).ToList();
 
-        public void update(Customer item) {
+        public async Task update(Customer item) {
+            //Customer? newCust = await GetAll().FindAsync(x => x.Id == item.Id);
 
-            Customer newCust = dbcontext.Customers.Find(item.Id);
-            newCust.Id = item.Id;
+            List<Customer> customers = this.GetAll().Result ;
+            Customer ? newCust = customers.FirstOrDefault(x => x.Id == item.Id);
+           
+
+           newCust.Id = item.Id;
             newCust.PhoneNumber = item.PhoneNumber;
             newCust.Name = item.Name;
             newCust.Address= item.Address;  
          
-            dbcontext.SaveChanges();
+          await dbcontext.SaveChangesAsync();
         }
 
-        public Customer GetCustomerById(string id)=> dbcontext.Customers.Find(id);
+        public async Task<Customer?> GetCustomerById(string id)=>
+             this.GetAll().Result.Find(x=> x.Id==id);
+        
+
+
     }
 }
