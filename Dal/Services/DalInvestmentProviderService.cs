@@ -49,5 +49,9 @@ namespace Dal.Services
 
           await  dbcontext.SaveChangesAsync();
         }
+       public async Task<InvestmentProvider> GetInvestmentProviderById(string id) =>
+             this.GetAll().Result.Find(x => x.Id == id);
+
+        
     }
 }
