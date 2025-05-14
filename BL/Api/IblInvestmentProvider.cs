@@ -16,5 +16,6 @@ namespace BL.Api
         Task create(BlInvestmentProvider InvestmentProvider);
         Task DeleteById(String id);
         Task update(BlInvestmentProvider InvestmentProvider);
+        Task<BlInvestmentProvider> getInvestmentProviderById(String id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BL.Api;
+﻿using Azure.Core;
+using BL.Api;
 using BL.Models;
 using Dal.Api;
 using Dal.Models;
@@ -14,13 +15,45 @@ namespace BL.Services
     { 
 
          IDal dal;
-    public BlInvestmentProviderService(IDal dal)
+        IblInvestment investments;
+        public BlInvestmentProviderService(IDal dal)
     {
 
         this.dal = dal;
 
     }
-    
+        public async Task<InvestmentProvider> castToDal(BlInvestmentProvider Ip)
+        {
+            InvestmentProvider newIp = new InvestmentProvider();
+
+            newIp.Id = Ip.Id;
+            newIp.Name = Ip.Name;
+            newIp.PhoneNumber = Ip.PhoneNumber;
+            newIp.Address = Ip.Address;
+
+            return newIp;
+        }
+
+
+        public async Task<BlInvestmentProvider> castToBl(InvestmentProvider Ip)
+        {
+            BlInvestmentProvider newIp = new BlInvestmentProvider();
+            newIp.Id = Ip.Id;
+            newIp.Name = Ip.Name;
+            newIp.PhoneNumber = Ip.PhoneNumber;
+            newIp.Address = Ip.Address;
+
+            foreach (var x in Ip.Investments.ToList())
+            {
+                Ip.Investments.Add(await investments.castToBl(x));
+            }
+
+            return newIp;
+
+        }
+
+
+
         public async Task create(BlInvestmentProvider InvestmentProvider)
         {
             InvestmentProvider newInvestmentProvider = new InvestmentProvider();
@@ -28,8 +61,24 @@ namespace BL.Services
             newInvestmentProvider.Name = InvestmentProvider.Name;
             newInvestmentProvider.PhoneNumber = InvestmentProvider.PhoneNumber;
             newInvestmentProvider.Address = InvestmentProvider.Address;
-           await dal.InvestmentProvider.create(newInvestmentProvider);
+            if (await getInvestmentProviderById(newInvestmentProvider.Id) != null)
+                throw new Exception("id exsistes already");
+            else await dal.InvestmentProvider.create(newInvestmentProvider);
+          
         }
+
+        public async Task<BlInvestmentProvider> getInvestmentProviderById(string id)
+        {
+            var Ip = await dal.Investment.GetInvestmentProviderById(id);
+            if (Ip == null)
+                return null;
+            //throw new NullReferenceException("cust not found");
+
+            BlInvestmentProvider newIp = await castToBl(Ip);
+            return newIp;
+        }
+
+    
 
         public async Task DeleteById(string id)
         {
@@ -59,6 +108,5 @@ namespace BL.Services
           await  dal.InvestmentProvider.update(newInvestmentProvider);
         }
 
-       
     }
 }
