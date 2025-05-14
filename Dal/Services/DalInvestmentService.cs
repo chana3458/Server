@@ -44,19 +44,28 @@ namespace Dal.Services
             public async Task<Investment> GetInvestmentByName(string name) =>await dbcontext.Investments.FindAsync(name);
 
        
-        public async Task update(Investment item)
+        public async Task update(Investment investment)
         {
 
-            Investment newIn =await dbcontext.Investments.FindAsync(item.Id);
-            newIn.Id = item.Id;
-            newIn.RiskLevel = item.RiskLevel;
-            newIn.Range = item.Range;
-            newIn.Price = item.Price;
-            newIn.Description = item.Description;
-            newIn.Image = item.Image;
-            newIn.Ipid = item.Ipid;
-            newIn.Locatoin = item.Locatoin;
-
+            Investment newIn =await dbcontext.Investments.FindAsync(investment.Id);
+            newIn.Id = investment.Id;
+            newIn.Description = investment.Description;
+            newIn.Images = investment.Images;
+            newIn.MinInvestment = investment.MinInvestment;
+            newIn.RiskLevel = investment.RiskLevel;
+            newIn.Title = investment.Title;
+            newIn.Roi = investment.Roi;
+            newIn.Price = investment.Price;
+            newIn.Ipid = investment.Ipid;
+            newIn.Location = investment.Location;
+            newIn.Description = investment.Description;
+            newIn.Features = investment.Features;
+            newIn.Term = investment.Term;
+            newIn.Type = investment.Type;
+            newIn.Ipid = investment.Ipid;
+            newIn.InvestmentProgress = investment.InvestmentProgress;
+            newIn.InvestorCount = investment.InvestorCount;
+            newIn.ExpectedCompletion = investment.ExpectedCompletion;
 
            await dbcontext.SaveChangesAsync();
         }
