@@ -1,5 +1,6 @@
 ﻿using BL.Api;
 using BL.Models;
+using Dal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,23 @@ namespace Server.Controllers
         {
 
             return await investmentProvider.GetAll()   ;
+        }
+
+        [HttpGet("GetInvestmentProviderById/{id}")]
+        public async Task<IActionResult> GetInvestmentProviderById(String id)
+        {
+            try
+            {
+
+                return Ok(await investmentProvider.GetInvestmentProviderById(id));
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(new { Text = ex.Message });
+            }
+
+
         }
 
 

@@ -29,7 +29,7 @@ namespace Dal
             services.AddSingleton<IDalInvestment, DalInvestmentService>();
             services.AddSingleton<IDalRequest, DalRequestService>();
 
-            services.AddSingleton<dbcontext, dbcontext>();
+            services.AddSingleton<dbcontext>();
             ServiceProvider servicesProvider = services.BuildServiceProvider();
 
 
