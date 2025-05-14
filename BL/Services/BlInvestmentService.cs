@@ -22,13 +22,9 @@ namespace BL.Services
             this.dal = dal;
 
         }
-investments
+
 
          public async  Task<Investment> castToDal(BlInvestment investment)
-
-     
-        public async Task create(BlInvestment investment)
- main
         {
             Investment newInvestment = new Investment();
 

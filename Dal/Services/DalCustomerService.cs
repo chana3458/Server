@@ -60,8 +60,7 @@ namespace Dal.Services
 
         public async Task<Customer?> GetCustomerById(string id)=>
              this.GetAll().Result.Find(x=> x.Id==id);
+
         
-
-
     }
 }
