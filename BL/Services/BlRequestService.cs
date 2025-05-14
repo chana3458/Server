@@ -85,13 +85,11 @@ namespace BL.Services
                 list.Add(blRequest);
             }
 
-            
-
             //var rList = await dal.RequestDetails.GetAll();
 
             
             return list;
-            }
+        }
 
 
          

@@ -44,7 +44,7 @@ public partial class dbcontext : DbContext
                 .IsUnicode(false)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Name)
-                .HasMaxLength(15)
+                .HasMaxLength(30)
                 .IsUnicode(false)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.PhoneNumber)
@@ -55,55 +55,39 @@ public partial class dbcontext : DbContext
 
         modelBuilder.Entity<Investment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC07B9A068BD");
+            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC073AF151E5");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(20)
+            entity.Property(e => e.Description)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
-            entity.Property(e => e.Description)
-                .HasMaxLength(20)
-                .IsFixedLength()
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("description");
             entity.Property(e => e.ExpectedCompletion)
                 .HasColumnType("datetime")
                 .HasColumnName("expectedCompletion");
             entity.Property(e => e.Features)
                 .HasMaxLength(50)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("features");
+                .IsFixedLength()
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Images)
                 .HasMaxLength(50)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("images");
-            entity.Property(e => e.InvestmentProgress).HasColumnName("investmentProgress");
-            entity.Property(e => e.InvestorCount).HasColumnName("investorCount");
+                .IsFixedLength()
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Ipid)
                 .HasMaxLength(15)
                 .IsUnicode(false)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("IPId");
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Location)
                 .HasMaxLength(20)
                 .IsFixedLength()
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("location");
-            entity.Property(e => e.MinInvestment).HasColumnName("minInvestment");
-            entity.Property(e => e.Price).HasColumnName("price");
-            entity.Property(e => e.RiskLevel).HasColumnName("Risk_level");
-            entity.Property(e => e.Roi).HasColumnName("roi");
-            entity.Property(e => e.Term).HasColumnName("term");
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Title)
                 .HasMaxLength(50)
                 .IsFixedLength()
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("title");
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Type)
                 .HasMaxLength(20)
                 .IsFixedLength()
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
-                .HasColumnName("type");
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
             entity.HasOne(d => d.Ip).WithMany(p => p.Investments)
                 .HasForeignKey(d => d.Ipid)

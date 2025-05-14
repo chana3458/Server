@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dal.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,7 @@ namespace BL.Models
         public string? PhoneNumber { get; set; }
 
         public string? Address { get; set; }
+
+        public virtual ICollection<BlInvestment> Investments { get; set; } = new List<BlInvestment>();
     }
 }

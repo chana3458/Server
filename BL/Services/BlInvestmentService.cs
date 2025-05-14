@@ -22,23 +22,20 @@ namespace BL.Services
             this.dal = dal;
 
         }
-investments
+
 
          public async  Task<Investment> castToDal(BlInvestment investment)
 
-     
-        public async Task create(BlInvestment investment)
- main
         {
             Investment newInvestment = new Investment();
 
-            newInvestment.Id = investment.Id;
+            //newInvestment.Id = investment.Id;
             newInvestment.Description = investment.Description;
             newInvestment.Images = investment.Images;
             newInvestment.MinInvestment = investment.MinInvestment;
             newInvestment.RiskLevel = investment.RiskLevel;
-             newInvestment.Title= investment.Title;  
-             newInvestment.Roi = investment.Roi;
+            newInvestment.Title = investment.Title;
+            newInvestment.Roi = investment.Roi;
             newInvestment.Price = investment.Price;
             newInvestment.Ipid = investment.Ipid;
             newInvestment.Location = investment.Location;
@@ -47,7 +44,7 @@ investments
             newInvestment.Term = investment.Term;
             newInvestment.Type = investment.Type;
             newInvestment.Ipid = investment.Ipid;
-            newInvestment.InvestmentProgress = investment.InvestmentProgress; 
+            newInvestment.InvestmentProgress = investment.InvestmentProgress;
             newInvestment.InvestorCount = investment.InvestorCount;
             newInvestment.ExpectedCompletion = investment.ExpectedCompletion;
 
@@ -58,7 +55,7 @@ investments
         {
             BlInvestment newInvestment = new BlInvestment();
 
-            newInvestment.Id = investment.Id;
+            //newInvestment.Id = investment.Id;
             newInvestment.Description = investment.Description;
             newInvestment.Images = investment.Images;
             newInvestment.MinInvestment = investment.MinInvestment;

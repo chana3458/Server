@@ -12,9 +12,10 @@ namespace BL.Api
     {
 
 
-        List<BlInvestmentProvider> GetAll();
-        void create(BlInvestmentProvider InvestmentProvider);
-        void DeleteById(String id);
-        void update(BlInvestmentProvider InvestmentProvider);
+        Task<List<BlInvestmentProvider>> GetAll();
+        Task create(BlInvestmentProvider InvestmentProvider);
+        Task DeleteById(String id);
+        Task update(BlInvestmentProvider InvestmentProvider);
+        Task<BlInvestmentProvider> getInvestmentProviderById(String id);
     }
 }
