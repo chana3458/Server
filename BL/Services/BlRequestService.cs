@@ -32,6 +32,7 @@ namespace BL.Services
             newReq.RiskLevel = request.RiskLevel;
             newReq.Budget = request.Budget;
             newReq.GotOffer = request.GotOffer;
+            newReq.RequestId= request.RequestId;    
             var customer = await dal.Customer.GetCustomerById(request.Id);
             if (customer != null)
             {
@@ -51,7 +52,7 @@ namespace BL.Services
             newReq.RiskLevel = request.RiskLevel;
             newReq.Budget = request.Budget;
             newReq.GotOffer = request.GotOffer;
-            
+            newReq.RequestId = request.RequestId;
 
             return newReq;
 

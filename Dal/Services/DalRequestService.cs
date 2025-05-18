@@ -55,7 +55,7 @@ namespace Dal.Services
     
         public async Task update(RequestDetail item)
         {
-            RequestDetail newReq =await dbcontext.RequestDetails.FindAsync(item.Id);
+            RequestDetail newReq =await dbcontext.RequestDetails.FindAsync(item.RequestId );
             //newReq.Id = item.Id;
             newReq.RiskLevel = item.RiskLevel;
             newReq.Range = item.Range;
