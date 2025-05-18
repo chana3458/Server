@@ -21,8 +21,9 @@ namespace BL.Models
 
         public string? Name { get; set; }
         public string? PhoneNumber { get; set; }
+        public int RequestId { get; set; }
 
-        
+
 
     }
 }
