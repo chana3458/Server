@@ -37,7 +37,6 @@ namespace BL.Services
             newInvestment.Title = investment.Title;
             newInvestment.Roi = investment.Roi;
             newInvestment.Price = investment.Price;
-            newInvestment.Ipid = investment.Ipid;
             newInvestment.Location = investment.Location;
             newInvestment.Description = investment.Description;
             newInvestment.Features = investment.Features;
@@ -95,18 +94,26 @@ namespace BL.Services
         public async Task<List<BlInvestment>> GetAll()
         {
             var iList =await dal.Investment.GetAll();
-
+            StringToArray(iList[0].Features);
             List<BlInvestment> list = new List<BlInvestment>();
 
 
             foreach (var i in iList)
             {
                 list.Add(await castToBl(i));
-            }           
+            }   
+            
             return list;
         }
+        public  string[] StringToArray(string input, char separator = ' ')
+        {
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
 
-        
+            return input.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+
 
         public async Task<BlInvestment> getInvestmentById(int  id)
         {
