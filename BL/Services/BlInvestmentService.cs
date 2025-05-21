@@ -93,16 +93,17 @@ namespace BL.Services
 
         public async Task<List<BlInvestment>> GetAll()
         {
+           
             var iList =await dal.Investment.GetAll();
-            StringToArray(iList[0].Features);
+
+           
             List<BlInvestment> list = new List<BlInvestment>();
-
-
+            
             foreach (var i in iList)
             {
                 list.Add(await castToBl(i));
-            }   
-            
+            }
+           
             return list;
         }
         public  string[] StringToArray(string input, char separator = ' ')
